@@ -1,16 +1,19 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
+-- http://www.cs.nott.ac.uk/~gmh/countdown.hs
 -----------------------------------------------------------------------------
 --
 --                           The Countdown Problem
 --
 --                               Graham Hutton
---          University of Nottingham
+--			                    University of Nottingham
 --
 --                               November 2001
 --
 -----------------------------------------------------------------------------
 
-import System.IO
-
+import System.IO()
+import System.Environment
 
 -----------------------------------------------------------------------------
 -- Formally specifying the problem
@@ -51,7 +54,7 @@ subs (x:xs)           = ys ++ map (x:) ys
 
 perms                :: [a] -> [[a]]
 perms []              = [[]]
-perms (x:xs)          = concat (map (interleave x) (perms xs))
+perms (x:xs)          = concatMap (interleave x) (perms xs)
 
 interleave           :: a -> [a] -> [[a]]
 interleave x []       = [[x]]
@@ -159,33 +162,20 @@ instance Show Expr where
                            bracket (Val n) = show n
                            bracket e       = "(" ++ show e ++ ")"
 
-display              :: [Expr] -> IO ()
-display []            = putStr "\nThere are no solutions.\n\n"
-display (e:es)        = do putStr "\nOne possible solution is "
-                           putStr (show e)
-                     putStr ".\n\nPress return to continue searching..."
-                           getLine
-                           putStr "\n"
-                           if null es then
-                               putStr "There are no more solutions.\n\n"
-                            else
-                               do sequence [print e | e <- es]
-                                  putStr "\nThere were "
-                                  putStr (show (length (e:es)))
-                                  putStr " solutions in total.\n\n"
+display              :: [Expr] -> Int -> IO ()
+display [] _         = putStr "\nThere are no solutions.\n\n"
+display (e:_) n      = do putStr $ "\nOne possible solution for " ++ show n ++ " is: "
+                          putStr (show e)
+	                         
 
-main                 :: IO ()
-main                  = do putStr "\ESC[2J"
-                           putStr "\ESC[0;0H"
-                           putStrLn "COUNTDOWN NUMBERS GAME SOLVER"
-                           putStrLn "-----------------------------"
-               putStr "\nEnter the source numbers : "
-                           ns <- readLn
-                           putStr "Enter the target number  : "
-                           n  <- readLn
-                           display (solutions'' ns n)
-                           putStr "Press return to start again..."
-                           getLine
-                           main
-
+main :: IO ()
+main = do
+    args <- getArgs
+    let
+        ints = map (read :: String -> Int) args
+        ns = tail ints
+        n = head ints
+    if length ns > 10 -- just a silly restriction
+      then ioError (userError "Too many numbers") 
+      else display (solutions'' ns n) n
 -----------------------------------------------------------------------------
