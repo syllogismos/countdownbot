@@ -6,6 +6,10 @@ countdown, just mention the bot according to the format given below
 
 @bot numbersgame {target_number} {n1} {n2} {n3} {n4} {n5} {n6}
 
+I did this for Rachel Riley
+---------------------------
+![rachel riley](http://i.minus.com/iOTDaqlFhriIM.gif)
+
 Installation:
 ------------
 
