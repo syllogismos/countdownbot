@@ -40,7 +40,7 @@ processTweet = (tweet) ->
 		console.log "processTweet response is " + response
 		return response
 
-extract = (string) ->
+extract = (string) -> # http://stackoverflow.com/questions/25107905 for future
 	numbers = string.match(/\b\d+\b/gi)
 	return numbers.join(" ")
 
