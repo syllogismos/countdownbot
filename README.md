@@ -8,7 +8,7 @@ countdown, just mention the bot according to the format given below
 
 I did this for Rachel Riley:
 ---------------------------
-![Rachel Riley](http://i.minus.com/iOTDaqlFhriIM.gif)
+![Rachel Riley](http://i.imgur.com/1dpbwmZ.gif)
 
 Installation:
 ------------
