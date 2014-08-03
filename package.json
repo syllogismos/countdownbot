@@ -1,9 +1,9 @@
 {
   "name": "countdownbot",
   "description": "countdown bot",
-  "homepage": "http://github.com/edsu/anon",
+  "homepage": "http://github.com/syllogismos/countdownbot",
   "license": "CC0-1.0",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "dependencies": {
     "twit": "latest",
     "coffee-script": "latest",
