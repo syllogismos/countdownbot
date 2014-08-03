@@ -25,7 +25,8 @@ tweet = (account, status) ->
 			console.log err if err
 
 respondToTweet = (account, status, tweet) ->
-	console.log status
+	solution = solve tweet
+	console.log solution
 	# tweet the status as a response to the given tweet...
 
 solve = (tweet) ->
@@ -33,7 +34,33 @@ solve = (tweet) ->
 	# return the solution to the numbers game.
 	# like removing everything except for the list of numbers
 	# ideally tweet = @nick 876 2 5 8 25 7 50
-	numbers = cleanse(tweet)
-	cmd = "numbersgame "++ numbers
+	numbers = extract tweet
+	cmd = "numbersgame " + numbers
 	return Shell.exec(cmd).output # it caliculates the solution synchronously for now.
 
+extract = (string) ->
+	# extract numbers list from the given string using regex r smething else
+	return string
+
+main = ->
+	config = getConfig argv.config
+	T = new Twit config.account
+	me = config.nick
+	stream = T.stream 'user', {track: me}, (err) ->
+		console.log err if err
+	stream.on 'tweet', (tweet) ->
+		console.log "stream tweet event"
+	stream.on 'warning', (err) ->
+		console.log "stream warning event"
+	stream.on 'connect', (err) ->
+		console.log "stream connect event"
+	stream.on 'reconnect', (err) ->
+		console.log "stream reconnect event"
+	stream.on 'connected', (err) ->
+		console.log "stream connected event"
+	stream.on 'error', (err) ->
+		console.log "stream error event"
+
+
+if require.main == module
+	main()
