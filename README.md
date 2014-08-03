@@ -7,6 +7,8 @@ and the bot will reply with a solution
 
 make a copy of config.template.json and rename it config.json and fill your keys and nick in it
 
+> npm install
+> coffee countdownbot.coffee
 
 
 you can get NumbersGame.exe by compiling the haskell source with ghc,
