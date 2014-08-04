@@ -2,6 +2,14 @@ Twit     = require 'twit'
 Shell    = require 'shelljs'
 minimist = require 'minimist'
 
+myRegEx = /(?:^| )(\d+)(?= |$)/g
+# http://stackoverflow.com/questions/25107905
+getMatches = (string, regex, index) ->
+	index || (index =1)
+	matches = []
+	while (match = regex.exec(string))
+		matches.push(match[index])
+	return matches
 
 argv = minimist process.argv.slice(2), default:
 	verbose: false
@@ -25,7 +33,6 @@ respondToTweet = (T, status, tweet) ->
 		T.post 'statuses/update', {status: status, in_reply_to_status_id:tweet.id_str}, (err) -> 
 			console.log "tweet posted"
 
-
 processTweet = (tweet) ->
 	# given a tweet content along with the nick mention 
 	# return the solution to the numbers game.
@@ -40,8 +47,8 @@ processTweet = (tweet) ->
 		console.log "processTweet response is " + response
 		return response
 
-extract = (string) -> # http://stackoverflow.com/questions/25107905 for future
-	numbers = string.match(/\b\d+\b/gi)
+extract = (string) -> # http://stackoverflow.com/questions/25107905
+	numbers = getMatches(string, myRegEx)
 	return numbers.join(" ")
 
 main = ->
@@ -75,3 +82,5 @@ exports.extract = extract
 exports.processTweet = processTweet
 exports.respondToTweet = respondToTweet
 exports.tweet = tweet
+exports.getMatches = getMatches
+exports.myRegEx = myRegEx
