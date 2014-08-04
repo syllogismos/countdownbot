@@ -175,7 +175,7 @@ main = do
         ints = map (read :: String -> Int) args
         ns = tail ints
         n = head ints
-    if length ns > 10 -- just a silly restriction
-      then ioError (userError "Too many numbers") 
+    if (length ns > 10) || n > 100000 -- just a silly restriction
+      then ioError (userError "Target too big or too many numbers") 
       else display (solutions'' ns n) n
 -----------------------------------------------------------------------------
