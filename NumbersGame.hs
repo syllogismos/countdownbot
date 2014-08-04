@@ -6,7 +6,7 @@
 --                           The Countdown Problem
 --
 --                               Graham Hutton
---			                    University of Nottingham
+--			   University of Nottingham
 --
 --                               November 2001
 --
